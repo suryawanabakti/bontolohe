@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pusat Laporan Posyandu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #111;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #fff;
+            padding: 12px 24px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .nav-left {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: bold;
+        }
+
+        .nav-left a {
+            text-decoration: none;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .nav-left a.active {
+            font-weight: bold;
+            border-bottom: 2px solid #000;
+            padding-bottom: 4px;
+        }
+
+        .nav-right {
+            font-size: 14px;
+        }
+
+        /* Container */
+        .container {
+            padding: 24px;
+        }
+
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Card */
+        .card {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 16px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        .card-desc {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        /* Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            align-items: center;
+        }
+
+        input,
+        select {
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            width: 100%;
+            background: #fff;
+        }
+
+        /* Button */
+        .btn {
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            background: #000;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .btn:hover {
+            background: #333;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #000;
+            color: #000;
+        }
+
+        .btn-outline:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* Section border (biar beda tiap laporan) */
+        .section {
+            border-left: 4px solid #000;
+            padding-left: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="nav-left">
+            <div class="logo">Posyandu</div>
+            <a href="#">Dashboard</a>
+            <a href="#">Pasien</a>
+            <a href="#">Pemeriksaan</a>
+            <a href="#" class="active">Laporan</a>
+            <a href="#">Konsultasi</a>
+            <a href="#">Edukasi</a>
+            <a href="#">Akun Pengguna</a>
+        </div>
+
+        <div class="nav-right">
+            Administrator
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="container">
+
+        <h1>Pusat Laporan Posyandu</h1>
+
+        <!-- Laporan Data Pasien -->
+        <div class="card section">
+            <div class="card-title">Laporan Data Pasien</div>
+            <div class="card-desc">Unduh daftar pasien berdasarkan filter yang dipilih.</div>
+
+            <div class="grid">
+                <input type="text" placeholder="Nama pasien...">
+
+                <select>
+                    <option>Semua Kategori</option>
+                </select>
+
+                <select>
+                    <option>Semua</option>
+                </select>
+
+                <button class="btn">Download PDF Pasien</button>
+            </div>
+        </div>
+
+        <!-- Laporan Pemeriksaan -->
+        <div class="card section">
+            <div class="card-title">Laporan Pemeriksaan</div>
+            <div class="card-desc">Unduh riwayat pemeriksaan berdasarkan filter yang dipilih.</div>
+
+            <div class="grid">
+                <select>
+                    <option>Semua Pasien</option>
+                </select>
+
+                <select>
+                    <option>Semua Kategori</option>
+                </select>
+
+                <input type="date">
+                <input type="date">
+
+                <button class="btn">Download PDF Pemeriksaan</button>
+            </div>
+        </div>
+
+        <!-- Laporan Stunting -->
+        <div class="card section">
+            <div class="card-title">Laporan Stunting Balita</div>
+            <div class="card-desc">Unduh data status gizi, asupan, dan imunisasi balita.</div>
+
+            <div class="grid">
+                <select>
+                    <option>March</option>
+                </select>
+
+                <select>
+                    <option>2026</option>
+                </select>
+
+                <button class="btn">Download Laporan Stunting</button>
+            </div>
+        </div>
+
+        <!-- Laporan Ibu Hamil -->
+        <div class="card section">
+            <div class="card-title">Laporan Ibu Hamil & Nifas</div>
+            <div class="card-desc">Unduh data cakupan TTD (FE), KEK, dan Sasaran Ibu Hamil.</div>
+
+            <div class="grid">
+                <select>
+                    <option>March</option>
+                </select>
+
+                <select>
+                    <option>2026</option>
+                </select>
+
+                <button class="btn">Download Laporan Bumil/Nifas</button>
+            </div>
+        </div>
+
+        <!-- Laporan SIP -->
+        <div class="card section">
+            <div class="card-title">Laporan Bulanan Posyandu (SIP)</div>
+            <div class="card-desc">Unduh laporan bulanan sistem informasi posyandu.</div>
+
+            <div class="grid">
+                <select>
+                    <option>March</option>
+                </select>
+
+                <select>
+                    <option>2026</option>
+                </select>
+
+                <button class="btn">Download Laporan SIP</button>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+
+</html>

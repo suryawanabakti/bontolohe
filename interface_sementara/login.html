@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Posyandu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background: #fff;
+            color: #000;
+        }
+
+        /* LEFT SIDE */
+        .left {
+            width: 50%;
+            background: #111;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .left h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .left p {
+            font-size: 16px;
+            color: #ccc;
+            max-width: 300px;
+        }
+
+        /* RIGHT SIDE */
+        .right {
+            width: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            width: 300px;
+        }
+
+        .login-box h2 {
+            margin-bottom: 10px;
+        }
+
+        .login-box p {
+            font-size: 14px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #000;
+            border-radius: 5px;
+        }
+
+        .remember {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .remember input {
+            width: auto;
+            margin-right: 8px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background: #000;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="left">
+        <h1>Posyandu Bontolohe</h1>
+        <p>Sistem Informasi Kesehatan Terpadu untuk Masa Depan yang Lebih Baik.</p>
+    </div>
+
+    <div class="right">
+        <div class="login-box">
+            <h2>Selamat Datang</h2>
+            <p>Silakan masuk ke akun Anda untuk menyambung.</p>
+
+            <label>Email Address</label>
+            <input type="email" placeholder="nama@email.com">
+
+            <label>Password</label>
+            <input type="password" placeholder="********">
+
+            <div class="remember">
+                <input type="checkbox">
+                <span>Ingat saya</span>
+            </div>
+
+            <button>Masuk ke Sistem</button>
+        </div>
+    </div>
+
+</body>
+</html>

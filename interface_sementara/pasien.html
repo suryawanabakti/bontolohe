@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Daftar Pasien</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #000;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: #fff;
+            padding: 15px 40px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .nav-left span {
+            margin-right: 20px;
+            cursor: pointer;
+        }
+
+        .nav-left .active {
+            font-weight: bold;
+            border-bottom: 2px solid #000;
+        }
+
+        /* CONTAINER */
+        .container {
+            padding: 30px 40px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 22px;
+        }
+
+        .top-bar button {
+            padding: 10px 15px;
+            border: 1px solid #000;
+            background: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .top-bar button:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* FILTER */
+        .filter-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        input,
+        select {
+            padding: 10px;
+            border: 1px solid #000;
+            border-radius: 5px;
+            min-width: 150px;
+        }
+
+        .range {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .range input {
+            width: 70px;
+            text-align: center;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: 1px solid #000;
+            background: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #000;
+            color: #fff;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #eee;
+            font-size: 13px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border: 1px solid #000;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .actions a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #000;
+            border: 1px solid #000;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+
+        .actions a:hover {
+            background: #000;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <div class="navbar">
+        <div class="nav-left">
+            <span>Dashboard</span>
+            <span class="active">Pasien</span>
+            <span>Pemeriksaan</span>
+            <span>Laporan</span>
+            <span>Konsultasi</span>
+            <span>Edukasi</span>
+            <span>Akun Pengguna</span>
+        </div>
+        <div>Administrator</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="container">
+
+        <!-- HEADER -->
+        <div class="top-bar">
+            <h1>Daftar Pasien</h1>
+            <button>Tambah Pasien</button>
+        </div>
+
+        <!-- FILTER -->
+        <div class="filter-box">
+            <div class="filter-row">
+
+                <input type="text" placeholder="Nama pasien...">
+
+                <select>
+                    <option>Semua</option>
+                    <option>Balita</option>
+                    <option>Ibu Hamil</option>
+                    <option>Lansia</option>
+                </select>
+
+                <select>
+                    <option>Semua</option>
+                    <option>L</option>
+                    <option>P</option>
+                </select>
+
+                <div class="range">
+                    <input type="number" placeholder="0">
+                    <span>-</span>
+                    <input type="number" placeholder="99">
+                </div>
+
+                <button>Filter</button>
+                <button>Reset</button>
+
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    <th>Tgl Lahir</th>
+                    <th>L/P</th>
+                    <th>Kategori</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                <tr>
+                    <td>Ahmad Rafif</td>
+                    <td>26 Dec 2023</td>
+                    <td>L</td>
+                    <td><span class="tag">Balita</span></td>
+                    <td class="actions">
+                        <a href="#">Edit</a>
+                        <a href="#">Hapus</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Dewi Lestari</td>
+                    <td>10 Dec 1998</td>
+                    <td>P</td>
+                    <td><span class="tag">Ibu Hamil</span></td>
+                    <td class="actions">
+                        <a href="#">Edit</a>
+                        <a href="#">Hapus</a>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Haji Mansyur</td>
+                    <td>20 Jan 1955</td>
+                    <td>L</td>
+                    <td><span class="tag">Lansia</span></td>
+                    <td class="actions">
+                        <a href="#">Edit</a>
+                        <a href="#">Hapus</a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</body>
+
+</html>
