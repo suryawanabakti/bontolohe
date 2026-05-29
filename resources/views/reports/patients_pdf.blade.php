@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="header">
-        <h2>LAPORAN DATA PASIEN POSYANDU</h2>
+        <h2>LAPORAN DATA PASIEN POSYANDU <br/> {{ request('kategori') === 'balita' ? "KHUSUS BALITA" :  "" }} {{ request('kategori') === 'ibu_hamil' ? "KHUSUS IBU HAMIL" :  "" }} </h2>
         <p>Dicetak pada: {{ date('d/m/Y H:i') }}</p>
     </div>
 
@@ -23,7 +23,10 @@
                 <th>Nama</th>
                 <th>Tanggal Lahir</th>
                 <th>Jenis Kelamin</th>
+                @if (!request('kategori'))
                 <th>Kategori</th>
+                    
+                @endif
             </tr>
         </thead>
         <tbody>
@@ -33,7 +36,10 @@
                     <td>{{ $patient->nama }}</td>
                     <td>{{ $patient->tanggal_lahir }}</td>
                     <td>{{ $patient->jenis_kelamin }}</td>
+                    @if (!request('kategori'))
                     <td>{{ ucfirst($patient->kategori) }}</td>
+                        
+                    @endif
                 </tr>
             @endforeach
         </tbody>

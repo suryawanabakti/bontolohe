@@ -22,7 +22,6 @@ class RoleSeeder extends Seeder
             Role::firstOrCreate(['name' => $roleName]);
         }
 
-        // Create default admin
         $admin = User::firstOrCreate(
             ['email' => 'admin@posyandu.com'],
             [
@@ -31,8 +30,7 @@ class RoleSeeder extends Seeder
             ]
         );
         $admin->assignRole('admin');
-        
-        // Create default kader
+
         $kader = User::firstOrCreate(
             ['email' => 'kader@posyandu.com'],
             [
