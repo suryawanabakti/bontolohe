@@ -17,7 +17,7 @@ class PatientController extends Controller
 
     public function index(Request $request)
     {
-        $query = Patient::with('user');
+        $query = Patient::with(['user', 'latestExamination']);
 
         if (auth()->user()->hasRole('kader_posyandu')) {
             $query->where('kader_id', auth()->id());

@@ -130,6 +130,13 @@
                                         <p class="text-xs font-bold text-pink-800 mb-3 uppercase">Khusus Ibu Hamil</p>
                                         <div class="space-y-4">
                                             <div>
+                                                <x-input-label for="hpht" :value="__('HPHT (Hari Pertama Haid Terakhir)')" />
+                                                <x-text-input id="hpht" class="block mt-1 w-full bg-white"
+                                                    type="date" name="hpht"
+                                                    :value="old('hpht')" />
+                                                <p class="text-xs text-gray-400 mt-1">Tanggal pertama haid terakhir</p>
+                                            </div>
+                                            <div>
                                                 <x-input-label for="tfu" :value="__('Tinggi Fundus Uteri (cm)')" />
                                                 <x-text-input id="tfu" class="block mt-1 w-full bg-white"
                                                     type="number" step="0.01" name="tfu"

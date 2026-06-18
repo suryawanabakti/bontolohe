@@ -40,7 +40,7 @@
 
                             @if($latestExam)
                                 <h4 class="font-semibold text-gray-700 mb-3">Data Terakhir</h4>
-                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+                                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
                                     <div class="bg-pink-50 rounded-lg p-4 text-center border border-pink-100">
                                         <p class="text-xs text-pink-600 font-medium uppercase">Berat Badan</p>
                                         <p class="text-2xl font-bold text-pink-700 mt-1">{{ $latestExam->berat_badan ?? '-' }}</p>
@@ -61,6 +61,16 @@
                                         <p class="text-2xl font-bold text-red-700 mt-1">{{ $latestExam->djj ?? '-' }}</p>
                                         <p class="text-xs text-gray-500">bpm</p>
                                     </div>
+                                    <div class="bg-indigo-50 rounded-lg p-4 text-center border border-indigo-100">
+                                        <p class="text-xs text-indigo-600 font-medium uppercase">Umur Kehamilan</p>
+                                        <p class="text-2xl font-bold text-indigo-700 mt-1">{{ $latestExam->umur_kehamilan ?? '-' }}</p>
+                                        <p class="text-xs text-gray-500">minggu</p>
+                                    </div>
+                                    <div class="bg-teal-50 rounded-lg p-4 text-center border border-teal-100">
+                                        <p class="text-xs text-teal-600 font-medium uppercase">HPL</p>
+                                        <p class="text-lg font-bold text-teal-700 mt-1">{{ $latestExam->hpl ? \Carbon\Carbon::parse($latestExam->hpl)->format('d/m/Y') : '-' }}</p>
+                                        <p class="text-xs text-gray-500">Perkiraan Lahir</p>
+                                    </div>
                                 </div>
                                 @if($latestExam->catatan)
                                     <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
@@ -78,6 +88,7 @@
                                         <thead class="bg-gray-50">
                                             <tr>
                                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
+                                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">UK</th>
                                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">BB</th>
                                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">LILA</th>
                                                 <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">TFU</th>
@@ -89,6 +100,7 @@
                                             @foreach($patient->examinations as $exam)
                                                 <tr class="hover:bg-gray-50">
                                                     <td class="px-4 py-2">{{ \Carbon\Carbon::parse($exam->tanggal_pemeriksaan)->format('d M Y') }}</td>
+                                                    <td class="px-4 py-2">{{ $exam->umur_kehamilan ? $exam->umur_kehamilan . ' mg' : '-' }}</td>
                                                     <td class="px-4 py-2">{{ $exam->berat_badan ?? '-' }}</td>
                                                     <td class="px-4 py-2">{{ $exam->lila ?? '-' }}</td>
                                                     <td class="px-4 py-2">{{ $exam->tfu ?? '-' }}</td>

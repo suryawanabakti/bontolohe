@@ -79,6 +79,12 @@
                                                     LK: {{ $exam->lingkar_kepala ?? '-' }}cm, LILA: {{ $exam->lila ?? '-' }}cm
                                                 @elseif($exam->patient->kategori == 'ibu_hamil')
                                                     TFU: {{ $exam->tfu ?? '-' }}cm, DJJ: {{ $exam->djj ?? '-' }}bpm
+                                                    @if($exam->umur_kehamilan)
+                                                        <br>UK: {{ $exam->umur_kehamilan }} minggu
+                                                    @endif
+                                                    @if($exam->hpl)
+                                                        , HPL: {{ \Carbon\Carbon::parse($exam->hpl)->format('d/m/Y') }}
+                                                    @endif
                                                 @endif
                                             </div>
                                         </td>

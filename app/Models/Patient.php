@@ -44,4 +44,9 @@ class Patient extends Model
     {
         return $this->hasMany(Examination::class);
     }
+
+    public function latestExamination()
+    {
+        return $this->hasOne(Examination::class)->latestOfMany('tanggal_pemeriksaan');
+    }
 }

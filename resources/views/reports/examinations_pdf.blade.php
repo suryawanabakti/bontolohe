@@ -38,6 +38,10 @@
                     <td>
                         @if($exam->patient->kategori == 'balita')
                             LK: {{ $exam->lingkar_kepala ?? '-' }}cm, LILA: {{ $exam->lila ?? '-' }}cm
+                        @elseif($exam->patient->kategori == 'ibu_hamil')
+                            TFU: {{ $exam->tfu ?? '-' }}cm, DJJ: {{ $exam->djj ?? '-' }}bpm
+                            @if($exam->umur_kehamilan), UK: {{ $exam->umur_kehamilan }} mg @endif
+                            @if($exam->hpl), HPL: {{ $exam->hpl }} @endif
                         @else
                             TD: {{ $exam->tekanan_darah ?? '-' }}, Suhu: {{ $exam->suhu ?? '-' }}°C
                         @endif

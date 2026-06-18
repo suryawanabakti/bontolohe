@@ -69,6 +69,7 @@
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Umur</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">L/P</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Kategori</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Perkiraan Lahir</th>
                                     <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
                                 </tr>
                             </thead>
@@ -88,6 +89,13 @@
                                                 {{ ucwords(str_replace('_', ' ', $patient->kategori)) }}
                                             </span>
                                         </td>
+                                        <td class="px-6 py-4 whitespace-nowrap">
+                                            @if($patient->kategori == 'ibu_hamil' && $patient->latestExamination?->hpht)
+                                                {{ \Carbon\Carbon::parse($patient->latestExamination->hpht)->addDays(280)->format('d M Y') }}
+                                            @else
+                                                <span class="text-gray-400">-</span>
+                                            @endif
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                             <a href="{{ route('patients.edit', $patient) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</a>
                                             <form action="{{ route('patients.destroy', $patient) }}" method="POST" class="inline">
@@ -99,7 +107,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="px-6 py-8 text-center text-gray-500">Tidak ada data pasien ditemukan.</td>
+                                        <td colspan="7" class="px-6 py-8 text-center text-gray-500">Tidak ada data pasien ditemukan.</td>
                                     </tr>
                                 @endforelse
                             </tbody>
