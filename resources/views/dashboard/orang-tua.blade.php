@@ -79,6 +79,26 @@
                                     </div>
                                 </div>
 
+                                {{-- Grafik Perkembangan --}}
+                                @if($patient->examinations->count() >= 2)
+                                    <div class="mb-6">
+                                        <h4 class="font-semibold text-gray-700 mb-3">Grafik Perkembangan</h4>
+                                        <div class="bg-white border border-gray-200 rounded-lg p-4">
+                                            <canvas id="growthChart-{{ $patient->id }}" height="250"></canvas>
+                                        </div>
+                                    </div>
+                                    @push('scripts')
+                                        <script>
+                                            document.addEventListener('DOMContentLoaded', function () {
+                                                const chartData = @json($patient->chartData);
+                                                if (chartData.labels.length >= 2) {
+                                                    window.createGrowthChart('growthChart-{{ $patient->id }}', chartData);
+                                                }
+                                            });
+                                        </script>
+                                    @endpush
+                                @endif
+
                                 {{-- Health Status Badges --}}
                                 <div class="flex flex-wrap gap-2 mb-6">
                                     @if($latestExam->naik_berat_badan)

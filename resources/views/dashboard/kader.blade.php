@@ -78,6 +78,106 @@
                 </div>
             </div>
 
+            {{-- Grafik Perkembangan Balita --}}
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 mb-4">Grafik Perkembangan Balita (6 Bulan Terakhir)</h3>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-600 mb-2">Jumlah Pemeriksaan</h4>
+                            <canvas id="kaderExamChart" height="200"></canvas>
+                        </div>
+                        <div>
+                            <h4 class="text-sm font-medium text-gray-600 mb-2">Rata-rata BB & TB Balita</h4>
+                            <canvas id="kaderAvgChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            @push('scripts')
+                <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const labels = @json($chartLabels);
+                        const counts = @json($chartCounts);
+                        const avgBb = @json($chartAvgBb);
+                        const avgTb = @json($chartAvgTb);
+
+                        if (labels.length && document.getElementById('kaderExamChart')) {
+                            new Chart(document.getElementById('kaderExamChart'), {
+                                type: 'bar',
+                                data: {
+                                    labels: labels,
+                                    datasets: [{
+                                        label: 'Jumlah Pemeriksaan',
+                                        data: counts,
+                                        backgroundColor: 'rgba(59, 130, 246, 0.7)',
+                                        borderColor: '#3B82F6',
+                                        borderWidth: 1,
+                                        borderRadius: 6,
+                                    }]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    plugins: {
+                                        legend: { display: false },
+                                    },
+                                    scales: {
+                                        x: { grid: { display: false } },
+                                        y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+                                    },
+                                }
+                            });
+                        }
+
+                        if (labels.length && document.getElementById('kaderAvgChart')) {
+                            new Chart(document.getElementById('kaderAvgChart'), {
+                                type: 'line',
+                                data: {
+                                    labels: labels,
+                                    datasets: [
+                                        {
+                                            label: 'Rata-rata BB (kg)',
+                                            data: avgBb,
+                                            borderColor: '#3B82F6',
+                                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                            tension: 0.3,
+                                            fill: true,
+                                            pointRadius: 4,
+                                        },
+                                        {
+                                            label: 'Rata-rata TB (cm)',
+                                            data: avgTb,
+                                            borderColor: '#10B981',
+                                            backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                                            tension: 0.3,
+                                            fill: true,
+                                            pointRadius: 4,
+                                        },
+                                    ]
+                                },
+                                options: {
+                                    responsive: true,
+                                    maintainAspectRatio: false,
+                                    interaction: { intersect: false, mode: 'index' },
+                                    plugins: {
+                                        legend: {
+                                            position: 'bottom',
+                                            labels: { usePointStyle: true, boxWidth: 8, font: { size: 11 } },
+                                        },
+                                    },
+                                    scales: {
+                                        x: { grid: { display: false } },
+                                        y: { beginAtZero: false, grid: { color: 'rgba(0,0,0,0.05)' } },
+                                    },
+                                }
+                            });
+                        }
+                    });
+                </script>
+            @endpush
+
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {{-- Distribusi Kategori --}}
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class PatientController extends Controller
 {
@@ -24,7 +25,7 @@ class PatientController extends Controller
         }
 
         if ($request->filled('search')) {
-            $query->where('nama', 'like', '%' . $request->search . '%');
+            $query->where('nama', 'like', '%'.$request->search.'%');
         }
 
         if ($request->filled('kategori')) {
@@ -53,6 +54,7 @@ class PatientController extends Controller
     public function create()
     {
         $users = User::role(['ibu_hamil', 'orang_tua'])->get();
+
         return view('patients.create', compact('users'));
     }
 
@@ -69,20 +71,16 @@ class PatientController extends Controller
             'kategori' => 'required|in:balita,ibu_hamil,ibu_nifas',
             'has_kms' => 'nullable|boolean',
         ]);
-
-        if (!empty($validated['new_user_name']) && !empty($validated['new_user_email']) && !empty($validated['new_user_password'])) {
+        if (! empty($validated['new_user_name']) && ! empty($validated['new_user_email']) && ! empty($validated['new_user_password'])) {
             $user = User::create([
                 'name' => $validated['new_user_name'],
                 'email' => $validated['new_user_email'],
-                'password' => \Illuminate\Support\Facades\Hash::make($validated['new_user_password']),
+                'password' => Hash::make($validated['new_user_password']),
             ]);
-
             $role = (in_array($validated['kategori'], ['ibu_hamil', 'ibu_nifas'])) ? 'ibu_hamil' : 'orang_tua';
             $user->assignRole($role);
-
             $validated['user_id'] = $user->id;
         }
-
         Patient::create([
             'user_id' => $validated['user_id'] ?? null,
             'kader_id' => auth()->id(),
@@ -100,6 +98,7 @@ class PatientController extends Controller
     {
         $this->checkOwnership($patient);
         $users = User::all();
+
         return view('patients.edit', compact('patient', 'users'));
     }
 
@@ -118,11 +117,11 @@ class PatientController extends Controller
             'has_kms' => 'nullable|boolean',
         ]);
 
-        if (!empty($validated['new_user_name']) && !empty($validated['new_user_email']) && !empty($validated['new_user_password'])) {
+        if (! empty($validated['new_user_name']) && ! empty($validated['new_user_email']) && ! empty($validated['new_user_password'])) {
             $user = User::create([
                 'name' => $validated['new_user_name'],
                 'email' => $validated['new_user_email'],
-                'password' => \Illuminate\Support\Facades\Hash::make($validated['new_user_password']),
+                'password' => Hash::make($validated['new_user_password']),
             ]);
 
             $role = (in_array($validated['kategori'], ['ibu_hamil', 'ibu_nifas'])) ? 'ibu_hamil' : 'orang_tua';
@@ -147,6 +146,7 @@ class PatientController extends Controller
     {
         $this->checkOwnership($patient);
         $patient->delete();
+
         return redirect()->route('patients.index')->with('success', 'Pasien berhasil dihapus.');
     }
 }

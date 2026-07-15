@@ -61,6 +61,8 @@ class DashboardController extends Controller
             'orang_tua' => User::role('orang_tua')->count(),
         ];
 
+        $chartData = $this->getMonthlyChartData();
+
         return view('dashboard.admin', compact(
             'totalPatients',
             'totalExaminations',
@@ -68,8 +70,36 @@ class DashboardController extends Controller
             'examsThisMonth',
             'categoryDistribution',
             'recentExaminations',
-            'usersPerRole'
+            'usersPerRole',
+            'chartData'
         ));
+    }
+
+    private function getMonthlyChartData()
+    {
+        $data = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $date = Carbon::now()->subMonths($i);
+            $month = $date->format('m');
+            $year = $date->format('Y');
+            $label = $date->format('M Y');
+
+            $data['labels'][] = $label;
+            $data['examsCount'][] = Examination::whereMonth('tanggal_pemeriksaan', $month)
+                ->whereYear('tanggal_pemeriksaan', $year)
+                ->count();
+
+            $data['avgBb'][] = round((float) (Examination::whereMonth('tanggal_pemeriksaan', $month)
+                ->whereYear('tanggal_pemeriksaan', $year)
+                ->whereNotNull('berat_badan')
+                ->avg('berat_badan') ?? 0), 1);
+
+            $data['avgTb'][] = round((float) (Examination::whereMonth('tanggal_pemeriksaan', $month)
+                ->whereYear('tanggal_pemeriksaan', $year)
+                ->whereNotNull('tinggi_badan')
+                ->avg('tinggi_badan') ?? 0), 1);
+        }
+        return $data;
     }
 
     private function kaderDashboard()
@@ -99,13 +129,55 @@ class DashboardController extends Controller
                   ->whereYear('tanggal_pemeriksaan', Carbon::now()->year);
             })->take(5)->get();
 
+        // Chart data: monthly examination trend (last 6 months)
+        $monthlyData = [];
+        for ($i = 5; $i >= 0; $i--) {
+            $date = Carbon::now()->subMonths($i);
+            $month = $date->format('m');
+            $year = $date->format('Y');
+            $label = $date->format('M Y');
+
+            $count = Examination::where('kader_id', $kaderId)
+                ->whereMonth('tanggal_pemeriksaan', $month)
+                ->whereYear('tanggal_pemeriksaan', $year)
+                ->count();
+
+            $avgBb = Examination::where('kader_id', $kaderId)
+                ->whereMonth('tanggal_pemeriksaan', $month)
+                ->whereYear('tanggal_pemeriksaan', $year)
+                ->whereNotNull('berat_badan')
+                ->avg('berat_badan');
+
+            $avgTb = Examination::where('kader_id', $kaderId)
+                ->whereMonth('tanggal_pemeriksaan', $month)
+                ->whereYear('tanggal_pemeriksaan', $year)
+                ->whereNotNull('tinggi_badan')
+                ->avg('tinggi_badan');
+
+            $monthlyData[] = [
+                'label' => $label,
+                'count' => $count,
+                'avgBb' => round((float) ($avgBb ?? 0), 1),
+                'avgTb' => round((float) ($avgTb ?? 0), 1),
+            ];
+        }
+
+        $chartLabels = array_column($monthlyData, 'label');
+        $chartCounts = array_column($monthlyData, 'count');
+        $chartAvgBb = array_column($monthlyData, 'avgBb');
+        $chartAvgTb = array_column($monthlyData, 'avgTb');
+
         return view('dashboard.kader', compact(
             'totalPatients',
             'examsToday',
             'examsThisMonth',
             'categoryDistribution',
             'recentExaminations',
-            'patientsNeedingCheckup'
+            'patientsNeedingCheckup',
+            'chartLabels',
+            'chartCounts',
+            'chartAvgBb',
+            'chartAvgTb'
         ));
     }
 
@@ -133,7 +205,19 @@ class DashboardController extends Controller
             ->with(['examinations' => function ($query) {
                 $query->latest('tanggal_pemeriksaan');
             }])
-            ->get();
+            ->get()
+            ->map(function ($patient) {
+                $exams = $patient->examinations->reverse()->values();
+                $chartData = [
+                    'labels' => $exams->map(fn($e) => \Carbon\Carbon::parse($e->tanggal_pemeriksaan)->format('d M'))->toArray(),
+                    'beratBadan' => $exams->map(fn($e) => (float) ($e->berat_badan ?? 0))->toArray(),
+                    'tinggiBadan' => $exams->map(fn($e) => (float) ($e->tinggi_badan ?? 0))->toArray(),
+                    'lingkarKepala' => $exams->map(fn($e) => (float) ($e->lingkar_kepala ?? 0))->toArray(),
+                    'lila' => $exams->map(fn($e) => (float) ($e->lila ?? 0))->toArray(),
+                ];
+                $patient->chartData = $chartData;
+                return $patient;
+            });
 
         $lastExam = null;
         if ($myPatients->isNotEmpty()) {
